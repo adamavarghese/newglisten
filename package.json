@@ -1,0 +1,20 @@
+{
+  "name": "glistenngo-site",
+  "version": "1.0.0",
+  "description": "Node.js + Express website for Glisten N' Go",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "website"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
