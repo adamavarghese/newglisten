@@ -6,648 +6,24 @@
 <title>Glisten N' Go — Premium Auto Detailing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #080808;
-    --dark: #0f0f0f;
-    --card: #141414;
-    --border: rgba(255,255,255,0.07);
-    --blue: #1e8eff;
-    --blue-glow: rgba(30,142,255,0.3);
-    --silver: #b8c6d4;
-    --white: #f0f4f8;
-    --dim: rgba(240,244,248,0.5);
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 4rem;
-    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
-    backdrop-filter: blur(4px);
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.7rem;
-    letter-spacing: 0.12em;
-    color: var(--white);
-    text-decoration: none;
-  }
-  .logo span { color: var(--blue); }
-
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--dim);
-    font-size: 0.82rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--white); }
-
-  .nav-cta {
-    background: var(--blue);
-    color: #fff !important;
-    padding: 0.55rem 1.4rem;
-    border-radius: 2px;
-    font-weight: 500 !important;
-    letter-spacing: 0.08em !important;
-    transition: background 0.2s, box-shadow 0.2s !important;
-  }
-  .nav-cta:hover { background: #3fa0ff !important; box-shadow: 0 0 20px var(--blue-glow) !important; }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 4rem 7rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 60% 40%, rgba(30,142,255,0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(30,142,255,0.06) 0%, transparent 60%),
-      linear-gradient(160deg, #0a0d12 0%, #080808 60%, #060810 100%);
-  }
-
-  /* Grid lines */
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
-  }
-
-  /* Shimmer stripe */
-  .hero-shimmer {
-    position: absolute;
-    top: 38%; left: -10%;
-    width: 120%; height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--blue) 40%, rgba(255,255,255,0.8) 50%, var(--blue) 60%, transparent 100%);
-    opacity: 0;
-    animation: shimmer 4s ease-in-out 0.8s forwards;
-  }
-  @keyframes shimmer {
-    0%   { opacity: 0; transform: translateX(-10%); }
-    20%  { opacity: 1; }
-    80%  { opacity: 1; }
-    100% { opacity: 0; transform: translateX(10%); }
-  }
-
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 1.2rem;
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.7s ease 0.2s forwards;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(5rem, 14vw, 13rem);
-    line-height: 0.9;
-    letter-spacing: 0.01em;
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-title .outline {
-    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
-    color: transparent;
-  }
-
-  .hero-title .blue { color: var(--blue); }
-
-  .hero-sub {
-    margin-top: 2rem;
-    max-width: 440px;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--dim);
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
-  }
-
-  .hero-actions {
-    margin-top: 2.5rem;
-    display: flex; gap: 1.2rem; align-items: center;
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.8s forwards;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    background: var(--blue);
-    color: #fff;
-    text-decoration: none;
-    padding: 1rem 2.4rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover {
-    background: #3fa0ff;
-    box-shadow: 0 0 30px var(--blue-glow), 0 0 60px rgba(30,142,255,0.15);
-    transform: translateY(-1px);
-  }
-
-  .btn-ghost {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    color: var(--dim);
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.2s;
-  }
-  .btn-ghost:hover { color: var(--white); }
-  .btn-ghost svg { width: 14px; height: 14px; }
-
-  .hero-stats {
-    position: absolute;
-    right: 4rem; bottom: 7rem;
-    display: flex; flex-direction: column; gap: 2rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.2s forwards;
-  }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    color: var(--white);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-top: 0.2rem;
-  }
-  .stat-divider {
-    width: 1px; height: 40px;
-    background: var(--border);
-    align-self: center;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  /* ── MARQUEE ── */
-  .marquee-wrap {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
-    overflow: hidden;
-    background: var(--dark);
-  }
-  .marquee-track {
-    display: flex;
-    animation: marquee 20s linear infinite;
-    white-space: nowrap;
-  }
-  .marquee-track span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.2em;
-    color: var(--dim);
-    padding: 0 3rem;
-  }
-  .marquee-track span.dot { color: var(--blue); font-size: 0.5rem; vertical-align: middle; }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* ── SECTIONS ── */
-  section { padding: 7rem 4rem; }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1;
-    letter-spacing: 0.02em;
-    margin-bottom: 1.5rem;
-  }
-
-  /* ── SERVICES ── */
-  .services { background: var(--dark); }
-
-  .services-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 4rem;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-
-  .service-card {
-    background: var(--card);
-    padding: 2.8rem 2.4rem;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-    cursor: default;
-  }
-  .service-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(30,142,255,0.06) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .service-card:hover { background: #1a1a1a; }
-  .service-card:hover::before { opacity: 1; }
-
-  .service-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--blue);
-    margin-bottom: 2rem;
-  }
-
-  .service-icon {
-    width: 44px; height: 44px;
-    margin-bottom: 1.5rem;
-    color: var(--silver);
-  }
-
-  .service-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.8rem;
-  }
-
-  .service-desc {
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: var(--dim);
-    margin-bottom: 2rem;
-  }
-
-  .service-price {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: var(--white);
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .service-price strong { color: var(--blue); font-size: 1rem; }
-
-  /* ── PROCESS ── */
-  .process { background: var(--black); }
-
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    margin-top: 5rem;
-    position: relative;
-  }
-
-  .process-steps::before {
-    content: '';
-    position: absolute;
-    top: 28px; left: 12.5%; right: 12.5%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blue), transparent);
-  }
-
-  .step {
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center;
-    padding: 0 2rem;
-  }
-
-  .step-circle {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    border: 1px solid var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--blue);
-    margin-bottom: 2rem;
-    background: var(--black);
-    position: relative;
-    z-index: 1;
-    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  }
-  .step:hover .step-circle {
-    background: var(--blue);
-    color: #fff;
-    box-shadow: 0 0 20px var(--blue-glow);
-  }
-
-  .step-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.8rem;
-  }
-
-  .step-desc {
-    font-size: 0.84rem;
-    line-height: 1.7;
-    color: var(--dim);
-  }
-
-  /* ── WHY US ── */
-  .why { background: var(--dark); }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-    margin-top: 4rem;
-  }
-
-  .why-points { display: flex; flex-direction: column; gap: 2rem; }
-
-  .why-point {
-    display: flex; gap: 1.5rem; align-items: flex-start;
-    padding: 1.8rem;
-    border: 1px solid var(--border);
-    background: var(--card);
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .why-point:hover {
-    border-color: rgba(30,142,255,0.35);
-    background: #161616;
-  }
-
-  .why-icon {
-    flex-shrink: 0;
-    width: 40px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--blue);
-  }
-
-  .why-point-title {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .why-point-desc {
-    font-size: 0.86rem;
-    line-height: 1.7;
-    color: var(--dim);
-  }
-
-  .why-visual {
-    position: relative;
-    height: 480px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .why-orb {
-    position: absolute;
-    width: 320px; height: 320px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(30,142,255,0.18) 0%, rgba(30,142,255,0.04) 50%, transparent 70%);
-    animation: pulse 4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50%       { transform: scale(1.08); opacity: 1; }
-  }
-
-  .why-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(30,142,255,0.2);
-  }
-  .ring1 { width: 260px; height: 260px; animation: spin 25s linear infinite; }
-  .ring2 { width: 360px; height: 360px; animation: spin 40s linear infinite reverse; }
-  .ring3 { width: 460px; height: 460px; border-color: rgba(30,142,255,0.08); animation: spin 60s linear infinite; }
-
-  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-  .ring1::before, .ring2::before {
-    content: '';
-    position: absolute;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--blue);
-    top: -4px; left: 50%;
-    box-shadow: 0 0 10px var(--blue);
-  }
-
-  .why-center-text {
-    position: relative;
-    text-align: center;
-    z-index: 1;
-  }
-  .why-center-text .big {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    color: var(--white);
-    line-height: 1;
-  }
-  .why-center-text .small {
-    font-size: 0.78rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-top: 0.5rem;
-  }
-
-  /* ── TESTIMONIALS ── */
-  .testimonials { background: var(--black); }
-
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 4rem;
-  }
-
-  .testi-card {
-    border: 1px solid var(--border);
-    padding: 2rem;
-    background: var(--card);
-    transition: border-color 0.3s;
-  }
-  .testi-card:hover { border-color: rgba(30,142,255,0.3); }
-
-  .stars {
-    color: var(--blue);
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-  }
-
-  .testi-text {
-    font-size: 0.9rem;
-    line-height: 1.75;
-    color: var(--silver);
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-
-  .testi-author {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
-  .testi-author strong { color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; display: block; margin-bottom: 0.2rem; letter-spacing: 0; font-style: normal; }
-
-  /* ── CTA ── */
-  .cta-section {
-    background: var(--dark);
-    text-align: center;
-    padding: 8rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-glow {
-    position: absolute;
-    width: 600px; height: 400px;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse, rgba(30,142,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-section .section-title { font-size: clamp(3.5rem, 8vw, 7rem); }
-
-  .cta-section p {
-    font-size: 1.1rem;
-    color: var(--dim);
-    max-width: 500px;
-    margin: 1.5rem auto 3rem;
-    line-height: 1.7;
-  }
-
-  .cta-buttons { display: flex; gap: 1.2rem; justify-content: center; align-items: center; }
-
-  .btn-outline {
-    display: inline-block;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--white);
-    text-decoration: none;
-    padding: 1rem 2.4rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border-radius: 2px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--white); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--black);
-    border-top: 1px solid var(--border);
-    padding: 3rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-copy {
-    font-size: 0.78rem;
-    color: var(--dim);
-    letter-spacing: 0.05em;
-  }
-
-  .footer-links { display: flex; gap: 2rem; }
-  .footer-links a {
-    text-decoration: none;
-    color: var(--dim);
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--white); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    .nav-links { display: none; }
-    .hero { padding: 0 2rem 5rem; }
-    .hero-stats { display: none; }
-    section { padding: 5rem 2rem; }
-    .services-grid { grid-template-columns: 1fr; }
-    .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
-    .process-steps::before { display: none; }
-    .why-grid { grid-template-columns: 1fr; }
-    .why-visual { display: none; }
-    .testi-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
-    .cta-section { padding: 5rem 2rem; }
-    .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  }
-</style>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">Glisten<span>N</span>'Go</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#book" class="nav-cta">Book Now</a></li>
+  <a href="#home" class="logo">Glisten<span>N</span>'Go</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links main-nav" id="main-nav">
+    <li><a href="#services" data-nav>Services</a></li>
+    <li><a href="#process" data-nav>Process</a></li>
+    <li><a href="#why" data-nav>Why Us</a></li>
+    <li><a href="#book" class="nav-cta" data-nav>Book Now</a></li>
   </ul>
 </nav>
 
@@ -671,6 +47,27 @@
     </a>
   </div>
 
+  <aside class="hero-gallery" aria-label="Recent detailing gallery">
+    <div class="hero-gallery-frame">
+      <img src="images/hero-1.jpg" alt="Detailed black Mercedes SUV" class="hero-gallery-image rotate-fix is-active">
+      <img src="images/hero-2.jpg" alt="Detailed red BMW coupe" class="hero-gallery-image rotate-fix">
+      <img src="images/hero-3.jpg" alt="Detailed white Lamborghini" class="hero-gallery-image">
+      <img src="images/hero-4.jpg" alt="Detailed BMW X3 interior trim" class="hero-gallery-image">
+      <img src="images/hero-5.jpg" alt="Detailed red and white interior" class="hero-gallery-image">
+      <img src="images/hero-6.jpg" alt="Detailed silver BMW at work site" class="hero-gallery-image rotate-fix">
+      <img src="images/hero-7.jpg" alt="Detailed red Mustang GT" class="hero-gallery-image rotate-fix">
+    </div>
+    <div class="hero-gallery-dots" aria-hidden="true">
+      <span class="hero-gallery-dot is-active"></span>
+      <span class="hero-gallery-dot"></span>
+      <span class="hero-gallery-dot"></span>
+      <span class="hero-gallery-dot"></span>
+      <span class="hero-gallery-dot"></span>
+      <span class="hero-gallery-dot"></span>
+      <span class="hero-gallery-dot"></span>
+    </div>
+  </aside>
+
   <div class="hero-stats">
     <div>
       <div class="stat-num">500<span style="color:var(--blue)">+</span></div>
@@ -693,13 +90,13 @@
 <div class="marquee-wrap">
   <div class="marquee-track">
     <span>Interior Detailing</span><span class="dot">●</span>
-    <span>Exterior Wash & Wax</span><span class="dot">●</span>
+    <span>Glisten &amp; Go Deluxe Package</span><span class="dot">●</span>
     <span>Paint Correction</span><span class="dot">●</span>
     <span>Ceramic Coating</span><span class="dot">●</span>
     <span>Engine Bay Cleaning</span><span class="dot">●</span>
     <span>Headlight Restoration</span><span class="dot">●</span>
     <span>Interior Detailing</span><span class="dot">●</span>
-    <span>Exterior Wash & Wax</span><span class="dot">●</span>
+    <span>Glisten &amp; Go Deluxe Package</span><span class="dot">●</span>
     <span>Paint Correction</span><span class="dot">●</span>
     <span>Ceramic Coating</span><span class="dot">●</span>
     <span>Engine Bay Cleaning</span><span class="dot">●</span>
@@ -727,9 +124,9 @@
         <circle cx="12" cy="34" r="3"/>
         <circle cx="32" cy="34" r="3"/>
       </svg>
-      <h3 class="service-name">Full Detail</h3>
-      <p class="service-desc">Our signature service — complete interior and exterior detailing. Deep clean, vacuum, shampoo, hand wash, clay bar, polish, and wax.</p>
-      <div class="service-price">Starting at <strong>$149</strong></div>
+      <h3 class="service-name">Exterior Detail</h3>
+      <p class="service-desc">Dual foam bath, power/hand wash, tire dressing, window cleaning, and rim + tire detailing.</p>
+      <div class="service-price"><strong>$99.99</strong></div>
     </div>
     <!-- Card 2 -->
     <div class="service-card">
@@ -764,9 +161,9 @@
         <path d="M14 16V12a2 2 0 012-2h12a2 2 0 012 2v4"/>
         <path d="M14 26h16M14 30h10"/>
       </svg>
-      <h3 class="service-name">Interior Only</h3>
-      <p class="service-desc">Full vacuum, steam clean, leather conditioning, dashboard wipe-down, odor elimination, and fabric protection treatment.</p>
-      <div class="service-price">Starting at <strong>$89</strong></div>
+      <h3 class="service-name">Interior Detail</h3>
+      <p class="service-desc">Trash removal, vacuuming, deep cleaning, upholstery + floor/carpet cleaning, and interior window cleaning.</p>
+      <div class="service-price"><strong>$149.99</strong></div>
     </div>
     <!-- Card 5 -->
     <div class="service-card">
@@ -781,16 +178,17 @@
       <div class="service-price">Starting at <strong>$59</strong></div>
     </div>
     <!-- Card 6 -->
-    <div class="service-card">
+    <div class="service-card service-card-popular">
+      <span class="service-badge">Most Popular</span>
       <p class="service-num">06</p>
       <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M10 34V18l12-8 12 8v16"/>
         <path d="M16 34v-8h12v8"/>
         <path d="M22 10v4"/>
       </svg>
-      <h3 class="service-name">Wash & Wax</h3>
-      <p class="service-desc">A thorough hand wash, iron decontamination, rinse, and carnauba wax application for a deep showroom shine.</p>
-      <div class="service-price">Starting at <strong>$69</strong></div>
+      <h3 class="service-name">Glisten &amp; Go Deluxe Package</h3>
+      <p class="service-desc">Full exterior + interior detail with full-vehicle wax for lasting protection and shine.</p>
+      <div class="service-price"><strong>$299.99</strong></div>
     </div>
   </div>
 </section>
@@ -916,7 +314,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p class="footer-copy">© 2026 Glisten N' Go Detailing. All rights reserved.</p>
+  <p class="footer-copy">© <span id="year">2026</span> Glisten N' Go Detailing. All rights reserved.</p>
   <div class="footer-links">
     <a href="#services">Services</a>
     <a href="#process">Process</a>
