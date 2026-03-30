@@ -7,6 +7,18 @@ const yearEl = document.getElementById('year');
 const galleryImages = Array.from(document.querySelectorAll('.hero-gallery-image'));
 const galleryDots = Array.from(document.querySelectorAll('.hero-gallery-dot'));
 
+galleryImages.forEach((image) => {
+  const setOrientationClass = () => {
+    image.classList.toggle('is-portrait', image.naturalHeight > image.naturalWidth);
+  };
+
+  if (image.complete) {
+    setOrientationClass();
+  } else {
+    image.addEventListener('load', setOrientationClass, { once: true });
+  }
+});
+
 if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
